@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>煤矿知识库问答注册</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/static/images/favicon.png"/>
+
+    <!-- Bundle Styles -->
+    <link rel="stylesheet" href="/static/css/bundle.css">
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="/static/css/app.min.css">
+</head>
+<body class="form-membership">
+
+<div class="form-wrapper">
+
+    <!-- logo -->
+    <div class="logo">
+        <img src="/static/images/small-logo.png" alt="logo">
+    </div>
+    <!-- ./ logo -->
+
+    <h5>注册账号</h5>
+
+    <!-- form -->
+    <form method="post" action="/user/register">
+        {% csrf_token %} <!--post提交时，加上一个安全防护 -->
+        <div class="form-group">
+            <input type="text" class="form-control" name="username" placeholder="用户名">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="密码" >
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="密码确认">
+        </div>
+        <div class="form-group">
+            <input type="text" name="phone" class="form-control"  placeholder="联系电话">
+        </div>
+        <div class="form-group">
+            <input type="email" name="email" class="form-control" placeholder="邮箱">
+        </div>
+
+        <button type="submit"  class="btn btn-primary btn-block">注册</button>
+        <hr>
+        <p class="text-muted">已有账号?</p>
+        <a href="{% url 'user:login'%}" class="btn btn-outline-light btn-sm">立即登录!</a>
+    </form>
+    {{ errmsg }}
+    <!-- ./ form -->
+
+</div>
+
+<!-- Bundle -->
+<script src="/static/js/bundle.js"></script>
+
+<!-- App scripts -->
+<script src="/static/js/app.min.js"></script>
+</body>
+</html>
