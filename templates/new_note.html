@@ -72,12 +72,12 @@
                                                         {% csrf_token %}
                                                         <div>
                                                                 <label for="author">笔记标题*</label>
-                                                                <input class="span4" type="text" name="title" id="author" value="" size="22">
+                                                                <input class="span4" type="text" name="title" id="author" value="" size="22" required>
                                                         </div>
 
                                                         <div>
                                                                 <label for="comment">笔记内容</label>
-                                                                <textarea class="span8" name="content" id="comment" cols="58" rows="10"></textarea>
+                                                                <textarea class="span8" name="content" id="comment" cols="58" rows="10" required></textarea>
                                                         </div>
 
                                                         <div>
@@ -85,7 +85,6 @@
                                                         </div>
 
                                                 </form>
-                                                {{ errmsg }}
 
                                         </div>
 
@@ -111,11 +110,19 @@
                                         {% for note in notes %}
                                                 <li class="article-entry standard">
                                                         <h4><a href="{% url 'note:editnote' note.note_id %}">{{ note.title }}</a></h4>
-                                                        <span class="article-meta">{{ note.create_time }}</span>
+                                                        <span class="article-meta" style="display:inline-block">{{ note.create_time }}</span> <a href="{% url 'note:deletenote' note.note_id %}" style="padding-left:80px;">删除</a>
 
                                                 </li>
                                         {% endfor %}
                                         </ul>
+                                        {% if messages %}
+                                                <script>
+                                                        {% for message in messages %}
+                                                                alert('{{ message.message }}');
+                                                        {% endfor %}
+                                                </script>
+                                        {% endif %}
+
                                 </section>
 
                         </aside>

@@ -58,16 +58,16 @@
                 <form method="post" action="/user/usercenter/">
                     {% csrf_token %} <!--post提交时，加上一个安全防护 -->
                     <div class="form-group">
-                        <input type="text" class="form-control" name="username" value="{{ user.username }}">
+                        <input type="text" class="form-control" name="username" value="{{ user.username }}" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" name="password" value="{{ user.password }}" >
+                        <input type="password" class="form-control" name="password" value="{{ user.password }}" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" name="phone" class="form-control"  value="{{ user.phone }}">
+                        <input type="text" name="phone" class="form-control"  value="{{ user.phone }}" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" name="email" class="form-control" value="{{ user.email }}">
+                        <input type="email" name="email" class="form-control" value="{{ user.email }}" required>
                     </div>
 
                     <button type="submit"  class="btn btn-primary btn-block">提交</button>

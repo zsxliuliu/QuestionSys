@@ -21,6 +21,7 @@ app_name = 'note'
 urlpatterns=[
     url(r'^newnote', views.newNote, name='newnote'),
     url(r'^editnote/(?P<note_id>\d+)$', views.editnote, name='editnote'),
+    url(r'^deletenote/(?P<note_id>\d+)$', views.deletenote, name='deletenote'),
     # url(r'^register', views.register, name='register'),
     # url(r'^index', views.index, name='index'),
     # url(r'^usercenter', views.usercenter, name='usercenter'),

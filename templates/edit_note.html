@@ -72,12 +72,12 @@
                                                         {% csrf_token %}
                                                         <div>
                                                                 <label for="author">笔记标题*</label>
-                                                                <input class="span4" type="text" name="title" id="author" value="{{ note.title }}" size="22">
+                                                                <input class="span4" type="text" name="title" id="author" value="{{ note.title }}" size="22" required>
                                                         </div>
 
                                                         <div>
                                                                 <label for="comment">笔记内容</label>
-                                                                <textarea class="span8" name="content" id="comment" cols="58" rows="10">{{ note.content }}</textarea>
+                                                                <textarea class="span8" name="content" id="comment" cols="58" rows="10" required>{{ note.content }}</textarea>
                                                         </div>
 
                                                         <div>
@@ -85,7 +85,13 @@
                                                         </div>
 
                                                 </form>
-                                                {{ errmsg }}
+                                                {% if messages %}
+                                                <script>
+                                                        {% for msg in messages %}
+                                                                alert('{{ msg.message }}');
+                                                        {% endfor %}
+                                                </script>
+                                                {% endif %}
 
                                         </div>
 
