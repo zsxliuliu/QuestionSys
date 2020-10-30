@@ -97,9 +97,12 @@
                     <img style="padding-left:10px;" src="/static/images/standard-large.png"/>
                     <ul class="articles">
                         {% for note in notes %}
-                            <li class="article-entry ">
-                                <h4 style="display:inline-block;"><a href="{% url 'note:editnote' note.note_id %}">{{ note.title }}</a></h4>
-                                <span style="padding-left:50px;">{{ note.create_time }}</span>
+                            <li class="article-entry " >
+                                <div style="width:90px;height:24px;display:inline-block;overflow: hidden; text-overflow: ellipsis;white-space: nowrap;margin-top:8px;">
+                                    <a href="{% url 'note:editnote' note.note_id %}">{{ note.title }}</a>
+                                </div>
+                                    <span style="padding-left:50px;align:center;margin-top:8px;">{{ note.create_time }}</span>
+
                             </li>
                         {% endfor %}
                     </ul>

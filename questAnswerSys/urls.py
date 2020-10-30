@@ -22,6 +22,7 @@ urlpatterns = [
     url('admin/', admin.site.urls),
     url(r'^user/', include('user.urls', namespace='user')), # 用户
     url(r'^note/', include('note.urls', namespace='note')), # 笔记
+    url(r'^adminuser/', include('adminuser.urls', namespace='adminuser')), # 后台管理员
     url(r'^$', views.loginProcess), # 默认打开登录页面
 
 ]

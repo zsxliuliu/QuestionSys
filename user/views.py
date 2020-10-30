@@ -47,7 +47,15 @@ def register(request):
 # 登录
 def loginProcess(request):
     if request.method == 'GET':
-        return render(request, 'login.html')
+        if 'username' in request.COOKIES:
+            username = request.COOKIES.get('username')
+            password = request.COOKIES.get('password')
+            checked = 'checked'
+        else:
+            username = ''
+            password = ''
+            checked = ''
+        return render(request, 'login.html', {'username':username, 'password':password, 'checked':checked})
     else:
         # 接收数据
         username = request.POST.get('username')
@@ -65,20 +73,27 @@ def loginProcess(request):
             # 记录用户的登录状态
             login(request, user)
             user_id = user.id
-            #
-            # 得到该用户的笔记列表
-            notes = Note.objects.filter(user_id=user_id).order_by('-create_time')
 
             # 获取登录后所要跳转到的地址
             # 默认跳转到首页
-            # next_url = request.GET.get('next', reverse('user:index'))
-            #
-            # # 跳转到next_url
-            # response = redirect(next_url)  # HttpResponseRedirect
+            next_url = request.GET.get('next', reverse('user:index'))
 
-            return render(request, 'index.html', {"notes":notes})
-            # # 返回response
-            # return response
+            # 跳转到next_url
+            response = redirect(next_url)  # HttpResponseRedirect
+            # 判断是否需要记住用户名
+            remember = request.POST.get('remember')
+            if remember == 'on':
+                # 记住用户名
+                response.set_cookie('username', username, max_age=7 * 24 * 3600)
+                response.set_cookie('password', password, max_age=7 * 24 * 3600)
+                print('记住了')
+            else:
+                response.delete_cookie('username')
+                response.delete_cookie('password')
+                print('没记住')
+            # return render(request, 'index.html', {"notes":notes})
+            # 返回response
+            return response
         else:
             # 用户名或密码错误
             return render(request, 'login.html', {'errmsg': '用户名或密码错误'})
@@ -87,7 +102,7 @@ def logout(request):
     return redirect(reverse('user:login'))
 
 def index(request):
-    if request.method == 'GET':
+
         user = request.user
         user_id = user.id
 

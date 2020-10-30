@@ -31,14 +31,14 @@
     <form method="post" action="/user/login">
         {% csrf_token %} <!--post提交时，加上一个安全防护 -->
         <div class="form-group">
-            <input type="text" name="username" class="form-control" placeholder="用户名" required autofocus>
+            <input type="text" name="username" class="form-control" value="{{ username }}" placeholder="用户名" required autofocus>
         </div>
         <div class="form-group">
-            <input type="password" name="password" class="form-control" placeholder="密码" required>
+            <input type="password" name="password" class="form-control" value="{{ password }}" placeholder="密码" required>
         </div>
         <div class="form-group d-flex justify-content-between">
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" checked="" id="customCheck1">
+                <input type="checkbox" class="custom-control-input" name="remeber" {{ checked }} id="customCheck1">
                 <label class="custom-control-label" for="customCheck1">记住密码</label>
             </div>
             <a href="./reset-password.html">重置密码</a>
@@ -50,6 +50,7 @@
         <a href="{% url 'user:register'%}" class="btn btn-outline-light btn-sm">立即注册</a>
     </form>
     <!-- ./ form -->
+    {{ errmsg }}
 
 </div>
 
