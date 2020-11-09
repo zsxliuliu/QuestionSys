@@ -9,8 +9,8 @@ https://docs.djangoproject.com/en/2.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
-from django.db.backends.mysql.base import DatabaseWrapper
-DatabaseWrapper.data_types['DateTimeField'] = 'datetime' # fix for MySQL 5.5
+# from django.db.backends.mysql.base import DatabaseWrapper
+# DatabaseWrapper.data_types['DateTimeField'] = 'datetime' # fix for MySQL 5.5
 
 import os
 import sys
@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'questAnswerSys.urls'
@@ -90,6 +90,7 @@ DATABASES = {
         'PORT': 3306,
     }
 }
+
 
 # django认证系统使用的模型类
 AUTH_USER_MODEL='user.User'
@@ -132,4 +133,6 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+
 

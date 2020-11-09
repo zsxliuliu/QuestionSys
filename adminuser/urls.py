@@ -31,5 +31,7 @@ urlpatterns=[
     url(r'^deleterelation', views.deleteRelation, name='deleterelation'),
     url(r'^userlist', views.userList, name='userlist'),
     url(r'^admininfo', views.adminInfo, name='admininfo'),
+    url(r'^deleteuser/(?P<user_id>\d+)$', views.deleteuser, name='deleteuser'),
+    url(r'^adminlogout', views.adminlogout, name='adminlogout'),
 
 ]

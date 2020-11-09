@@ -33,9 +33,8 @@
         <li class="layui-nav-item"> <a href="javascript:;">{{ adminname }}</a>
           <dl class="layui-nav-child">
             <!-- 二级菜单 -->
-            <dd><a href="javascript:;" onclick="member_show('张三','{% url 'adminuser:admininfo' %}','10001','360','400')">个人信息</a></dd>
-
-            <dd><a href="javascript:;" onclick="logout()">退出</a></dd>
+            <dd><a href="javascript:;" onclick="member_show('{{ adminname }}','{% url 'adminuser:admininfo' %}','10001','360','400')">个人信息</a></dd>
+            <a href="{% url 'adminuser:adminlogout' %}">退出</a>
           </dl>
         </li>
 
@@ -146,26 +145,6 @@
 
     });
 
-    function logout() {
-
-        $.ajax({
-            type:"post",
-            url:"",
-            data:{e:1},
-            dataType:"json",
-            success:function (data) {
-                if(data.status==1){
-                    layer.msg(data.info,{icon:1,time:1000});
-                    setTimeout("window.location.href='{:url('Login/login')}'",2000);return false;
-                    return false;
-                }else{
-                    layer.msg(data.info,{icon:5,time:2000});return false;
-                }
-            }
-
-        })
-        return false;
-    }
 
     function member_show(title,url,id,w,h){
       x_admin_show(title,url,w,h);

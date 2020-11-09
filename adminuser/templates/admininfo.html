@@ -18,41 +18,36 @@
     <body>
         <div class="x-body">
             <blockquote class="layui-elem-quote">
-                <img src="/static/images/adminlogo.png" class="layui-circle" style="width:50px;float:left">
+                <img src="/static/images/adminlogo.png" class="layui-circle" style="width:50px;float:left;">
                 <dl style="margin-left:80px; color:#019688">
-                <dt><span >风羽</span> <span >余额：0</span></dt>
-                <dd style="margin-left:0">你要悄悄努力，然后惊艳所有人！</dd>
+                    <dt><span>哈喽，</span> <span></span></dt>
+                <dd style="margin-left:0">你要悄悄努力然后惊艳所有人！</dd>
               </dl>
             </blockquote>
             <div class="pd-20">
-              <table  class="layui-table" lay-skin="line">
-                <tbody>
-                  <tr>
-                    <th  width="80">性别：</th>
-                    <td>男</td>
-                  </tr>
-                  <tr>
-                    <th>手机：</th>
-                    <td>111111111111</td>
-                  </tr>
-                  <tr>
-                    <th>邮箱：</th>
-                    <td>123456@mail.com</td>
-                  </tr>
-                  <tr>
-                    <th>地址：</th>
-                    <td>北京市</td>
-                  </tr>
-                  <tr>
-                    <th>注册时间：</th>
-                    <td>2018-01-01</td>
-                  </tr>
-                  <tr>
-                    <th>积分：</th>
-                    <td>660</td>
-                  </tr>
-                </tbody>
-              </table>
+              <form class="layui-form x-center" method="post"  action="/adminuser/admininfo" >
+                  {% csrf_token %}
+                <div class="layui-form-pane" style="margin-top: 15px;">
+                  <div class="layui-form-item" style="width:400px;height:150px;">
+                      <div style="width:400px;height:30px;">
+                            <label class="layui-form-label">用户名称</label>
+                            <div class="layui-input-inline" style="width:200px">
+                            <input type="text" name="name" value="{{ adminname }}"  autocomplete="off" class="layui-input">
+                          </div>
+                      </div>
+                      <div style="width:400px;height:30px;padding-top:20px;">
+                          <label class="layui-form-label">登录密码</label>
+                          <div class="layui-input-inline" style="width:200px">
+                            <input type="text" name="pwd" value="{{ adminpassword }}" autocomplete="off" class="layui-input">
+                          </div>
+                      </div>
+                    <div style="width:400px;height:30px;padding-top:20px;">
+                        <button style="margin-right:0px;" type="submit" class="layui-btn">修改</button>
+                        <button style="margin-right:80px;" type="reset" class="layui-btn">重置</button>
+                    </div>
+                  </div>
+                </div>
+            </form>
             </div>
         </div>
         <script src="/static/lib/layui/layui.js" charset="utf-8">

@@ -23,56 +23,56 @@
             <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
         </div>
         <div class="x-body">
-            <form class="layui-form x-center" action="" style="width:50%">
+            <form class="layui-form x-center" method="post" action="/adminuser/changentity" style="width:50%">
+                {% csrf_token %}
                 <div class="layui-form-pane" style="margin-top: 15px;">
                   <div class="layui-form-item" style="width:400px;height:250px;">
                       <div style="width:400px;height:30px;">
                             <label style="width:130px;" class="layui-form-label">原始实体类型</label>
                             <div class="layui-input-inline" style="width:200px;text-align: left">
-                                <select name="fid">
-                                    <option value="0">请选择</option>
-                                    <option value="新闻">新闻</option>
-                                    <option value="新闻子类1">--新闻子类1</option>
-                                    <option value="新闻子类2">--新闻子类2</option>
-                                    <option value="产品">产品</option>
-                                    <option value="产品子类1">--产品子类1</option>
-                                    <option value="产品子类2">--产品子类2</option>
+                                <select name="origin_label">
+                                    {% for entitytype in entitytypes %}
+                                        <option  value="{{ entitytype.entity_type }}">{{ entitytype.entity_type }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                       </div>
                       <div style="width:400px;height:30px;padding-top:20px;">
                           <label style="width:130px;" class="layui-form-label">原始实体名称</label>
                           <div class="layui-input-inline" style="width:200px">
-                            <input type="text" name="name"  placeholder="实体名称" autocomplete="off" class="layui-input">
+                            <input type="text" name="origin_name"  placeholder="实体名称" autocomplete="off" class="layui-input" required>
                           </div>
                       </div>
                       <div style="width:400px;height:30px;padding-top:20px;">
                             <label style="width:130px;" class="layui-form-label">修改实体类型</label>
                             <div class="layui-input-inline" style="width:200px;text-align: left">
-                                <select name="fid">
-                                    <option value="0">请选择</option>
-                                    <option value="新闻">新闻</option>
-                                    <option value="新闻子类1">--新闻子类1</option>
-                                    <option value="新闻子类2">--新闻子类2</option>
-                                    <option value="产品">产品</option>
-                                    <option value="产品子类1">--产品子类1</option>
-                                    <option value="产品子类2">--产品子类2</option>
+                                <select name="change_label">
+                                    {% for entitytype in entitytypes %}
+                                        <option  value="{{ entitytype.entity_type }}">{{ entitytype.entity_type }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                       </div>
                       <div style="width:400px;height:30px;padding-top:20px;">
                           <label style="width:130px;" class="layui-form-label">修改实体名称</label>
                           <div class="layui-input-inline" style="width:200px">
-                            <input type="text" name="name"  placeholder="实体名称" autocomplete="off" class="layui-input">
+                            <input type="text" name="change_name"   placeholder="实体名称" autocomplete="off" class="layui-input" required>
                           </div>
                       </div>
                     <div style="width:400px;height:30px;padding-top:20px;">
-                        <button style="margin-right:0px;" type="submit" class="layui-btn">添加</button>
+                        <button style="margin-right:0px;" type="submit" class="layui-btn">修改</button>
                         <button style="margin-right:80px;" type="reset" class="layui-btn">重置</button>
                     </div>
                   </div>
                 </div>
             </form>
+            {% if messages %}
+            <script>
+                 {% for msg in messages %}
+                       alert('{{ msg.message }}');
+                 {% endfor %}
+            </script>
+            {% endif %}
 
         </div>
         <script src="/static/lib/layui/layui.js" charset="utf-8"></script>

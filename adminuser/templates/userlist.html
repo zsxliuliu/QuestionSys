@@ -33,88 +33,41 @@
                   </div>
                 </div> 
             </form>
-            <xblock>
-            	<button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button>
-            	<button class="layui-btn" onclick="admin_add('添加用户','admin-add.html','600','500')"><i class="layui-icon">&#xe608;</i>添加</button>
-            	<span class="x-right" style="line-height:40px">共有数据：<span class="layui-badge">66</span> 条</span>
-            </xblock>
+
             <table class="layui-table">
                 <thead>
                     <tr>
-                        <th>
-                            <input type="checkbox" name="" value="">
-                        </th>
-                        <th>
-                            ID
-                        </th>
-                        <th>
-                            登录名
-                        </th>
-                        <th>
-                            手机
-                        </th>
-                        <th>
-                            邮箱
-                        </th>
-                        <th>
-                            角色
-                        </th>
-                        <th>
-                            加入时间
-                        </th>
-                        <th>
-                            状态
-                        </th>
-                        <th>
-                            操作
-                        </th>
+                        <th><input type="checkbox" name="" value=""></th>
+                        <th>登录名</th>
+                        <th>联系电话</th>
+                        <th>邮箱</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
+                {% for userinfo in userlist %}
                     <tr>
-                        <td>
-                            <input type="checkbox" value="1" name="">
-                        </td>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            admin
-                        </td>
-                        <td >
-                            12345678912
-                        </td>
-                        <td >
-                            12345678@qq.com
-                        </td>
-                        <td >
-                            超级管理员
-                        </td>
-                        <td>
-                            2018-01-01 11:11:42
-                        </td>
-                        <td class="td-status">
-                            <span class="layui-btn layui-btn-normal ">
-                                已启用
-                            </span>
-                        </td>
+                        <td><input type="checkbox" value="1" name=""></td>
+                        <td>{{ userinfo.username }}</td>
+                        <td>{{ userinfo.phone }}</td>
+                        <td>{{ userinfo.email }}</td>
+
                         <td class="td-manage">
-                            <a style="text-decoration:none" onclick="admin_stop(this,'10001')" href="javascript:;" title="停用">
-                                <i class="layui-icon">&#xe601;</i>
-                            </a>
-                            <a title="编辑" href="javascript:;" onclick="admin_edit('编辑','admin-edit.html','4','','510')"
-                            class="ml-5" style="text-decoration:none">
-                                <i class="layui-icon">&#xe642;</i>
-                            </a>
-                            <a title="删除" href="javascript:;" onclick="admin_del(this,'1')" 
-                            style="text-decoration:none">
+                            <a title="删除" href="{% url 'adminuser:deleteuser' userinfo.id %}" style="text-decoration:none">
                                 <i class="layui-icon">&#xe640;</i>
                             </a>
                         </td>
                     </tr>
+                {% endfor %}
                 </tbody>
             </table>
-
+            {% if messages %}
+            <script>
+                  {% for message in messages %}
+                         alert('{{ message.message }}');
+                  {% endfor %}
+            </script>
+            {% endif %}
 
         <script src="/static/lib/layui/layui.js" charset="utf-8"></script>
         <script src="/static/js/x-layui.js" charset="utf-8"></script>
@@ -213,6 +166,6 @@
                 });
             }
             </script>
-            
+        </div>
     </body>
 </html>

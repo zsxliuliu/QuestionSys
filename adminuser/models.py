@@ -17,3 +17,20 @@ class AdminUser(models.Model):
     def __str__(self):
         return self.admin_name
 
+class EntityType(models.Model):
+    id = models.AutoField(primary_key=True)
+    entity_type = models.CharField(max_length=12, verbose_name='实体类别')
+
+    class Meta:
+        db_table = 'qestionsys_entitytype'
+        verbose_name = '实体类别'
+        verbose_name_plural = verbose_name
+
+class RelationType(models.Model):
+    id = models.AutoField(primary_key=True)
+    relation_type = models.CharField(max_length=12, verbose_name='关系类别')
+
+    class Meta:
+        db_table = 'qestionsys_relationtype'
+        verbose_name = '关系类别'
+        verbose_name_plural = verbose_name

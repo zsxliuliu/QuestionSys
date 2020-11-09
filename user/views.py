@@ -140,5 +140,7 @@ def usercenter(request):
         user_id = user.id
 
         User.objects.filter(id=user_id).update(username=username, password=password, phone=phone, email=email)
-    return render(request, 'usercenter.html')
+        user = User.objects.get(id=user_id)
+        context = {'page': 'user', }
+        return render(request, 'usercenter.html',context)
 

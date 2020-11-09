@@ -23,36 +23,40 @@
             <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
         </div>
         <div class="x-body">
-            <form class="layui-form x-center" action="" style="width:50%">
-                <div class="layui-form-pane" style="margin-top: 15px;">
-                  <div class="layui-form-item" style="width:680px;">
-                    <div class="layui-input-inline" style="width:120px;text-align: left">
-                        <select name="fid">
-                            <option value="0">实体类别</option>
-                            <option value="新闻">新闻</option>
-                            <option value="新闻子类1">--新闻子类1</option>
-                            <option value="新闻子类2">--新闻子类2</option>
-                            <option value="产品">产品</option>
-                            <option value="产品子类1">--产品子类1</option>
-                            <option value="产品子类2">--产品子类2</option>
+            <form class="layui-form x-center" method="post" action="/adminuser/search" style="width:100%">
+                {% csrf_token %}
+                <div class="layui-form-pane" style="margin-top: 15px;padding-left:50px;">
+                  <div class="layui-form-item" style="width:1100px;">
+                    <div class="layui-input-inline" style="width:180px;text-align: left">
+                        <select name="entity_type1">
+                                    <option  value="{{ entity_type1 }}">{{ entity_type1 }}</option>
+                                    {% for entitytype in entitytypes %}
+                                        <option  value="{{ entitytype.entity_type }}">{{ entitytype.entity_type }}</option>
+                                    {% endfor %}
+                                </select>
+                    </div>
+                    <div class="layui-input-inline" style="width:180px">
+                        <input type="text" name="entity_name1"  value="{{ entity1 }}" placeholder="实体1名称" autocomplete="off" class="layui-input">
+                    </div>
+                      <div class="layui-input-inline" style="width:180px;text-align: left">
+                        <select name="relation_type">
+                                    <option  value="{{ relation }}">{{ relation }}</option>
+                                    <option  value=""></option>
+                                    {% for relationtype in relationtypes %}
+                                        <option  value="{{ relationtype.relation_type }}">{{ relationtype.relation_type }}</option>
+                                    {% endfor %}
                         </select>
                     </div>
-                    <div class="layui-input-inline" style="width:120px">
-                        <input type="text" name="name"  placeholder="实体名称" autocomplete="off" class="layui-input">
+                    <div class="layui-input-inline" style="width:180px;text-align: left">
+                        <select name="entity_type2">
+                                    <option  value="{{ entity_type2 }}">{{ entity_type2 }}</option>
+                                    {% for entitytype in entitytypes %}
+                                        <option  value="{{ entitytype.entity_type }}">{{ entitytype.entity_type }}</option>
+                                    {% endfor %}
+                                </select>
                     </div>
-                      <div class="layui-input-inline" style="width:120px;text-align: left">
-                        <select name="fid">
-                            <option value="0">关系类别</option>
-                            <option value="新闻">新闻</option>
-                            <option value="新闻子类1">--新闻子类1</option>
-                            <option value="新闻子类2">--新闻子类2</option>
-                            <option value="产品">产品</option>
-                            <option value="产品子类1">--产品子类1</option>
-                            <option value="产品子类2">--产品子类2</option>
-                        </select>
-                    </div>
-                    <div class="layui-input-inline" style="width:120px">
-                        <input type="text" name="name"  placeholder="关系名称" autocomplete="off" class="layui-input">
+                    <div class="layui-input-inline" style="width:180px">
+                        <input type="text" name="entity_name2"  value="{{ entity2 }}" placeholder="实体2名称" autocomplete="off" class="layui-input">
                     </div>
                     <div class="layui-input-inline" style="width:80px">
                     <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
@@ -60,101 +64,129 @@
                   </div>
                 </div> 
             </form>
-            <xblock><button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button><span class="x-right" style="line-height:40px">共有数据：88 条</span></xblock>
-            <table class="layui-table">
-                <thead>
-                    <tr>
-                        <th>
-                            <input type="checkbox" name="" value="">
-                        </th>
-                        <th>
-                            ID
-                        </th>
-                        <th>
-                            排序
-                        </th>
-                        <th>
-                            分类名
-                        </th>
-                        <th>
-                            操作
-                        </th>
-                    </tr>
-                </thead>
-                <tbody id="x-link">
-                    <tr>
-                        <td>
-                            <input type="checkbox" value="1" name="">
-                        </td>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            新闻
-                        </td>
-                        <td class="td-manage">
-                            <a title="编辑" href="javascript:;" onclick="cate_edit('编辑','cate-edit.html','4','','510')"
-                            class="ml-5" style="text-decoration:none">
-                                <i class="layui-icon">&#xe642;</i>
-                            </a>
-                            <a title="删除" href="javascript:;" onclick="cate_del(this,'1')" 
-                            style="text-decoration:none">
-                                <i class="layui-icon">&#xe640;</i>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            {% if messages %}
+            <script>
+                 {% for msg in messages %}
+                       alert('{{ msg.message }}');
+                 {% endfor %}
+            </script>
+            {% endif %}
+            <div id="neo" style="width:500px;height:300px;"></div>
         </div>
         <script src="/static/lib/layui/layui.js" charset="utf-8"></script>
         <script src="/static/js/x-layui.js" charset="utf-8"></script>
+        <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <!-- use from online-->
+    <script src="https://cdn.bootcss.com/echarts/4.1.0.rc2/echarts.js"></script>
+    <!-- use from local-->
+    <script src="/static/js/echarts.min.js"></script>
         <script>
             layui.use(['element','layer','form'], function(){
                 $ = layui.jquery;//jquery
               lement = layui.element();//面包导航
               layer = layui.layer;//弹出层
               form = layui.form();
-
-              //监听提交
-              form.on('submit(add)', function(data){
-                console.log(data);
-                //发异步，把数据提交给php
-                layer.alert("增加成功", {icon: 6});
-                $('#x-link').prepend('<tr><td><input type="checkbox"value="1"name=""></td><td>1</td><td>1</td><td>'+data.field.name+'</td><td class="td-manage"><a title="编辑"href="javascript:;"onclick="cate_edit(\'编辑\',\'cate-edit.html\',\'4\',\'\',\'510\')"class="ml-5"style="text-decoration:none"><i class="layui-icon">&#xe642;</i></a><a title="删除"href="javascript:;"onclick="cate_del(this,\'1\')"style="text-decoration:none"><i class="layui-icon">&#xe640;</i></a></td></tr>');
-                return false;
-              });
-
-
             })
 
-
-
-              
-            //批量删除提交
-             function delAll () {
-                layer.confirm('确认要删除吗？',function(index){
-                    //捉到所有被选中的，发异步进行删除
-                    layer.msg('删除成功', {icon: 1});
-                });
-             }
-
-             //-编辑
-            function cate_edit (title,url,id,w,h) {
-                x_admin_show(title,url,w,h); 
-            }
-           
-            /*-删除*/
-            function cate_del(obj,id){
-                layer.confirm('确认要删除吗？',function(index){
-                    //发异步删除数据
-                    $(obj).parents("tr").remove();
-                    layer.msg('已删除!',{icon:1,time:1000});
-                });
-            }
             </script>
+
+
+        <script>
+            var data = {{ data|safe }};
+    var link = {{ link|safe }};
+    alert(data);
+    var myChart = echarts.init(document.getElementById('neo'));
+    var categories = [];
+    for (var i = 0; i < 2; i++) {
+        categories[i] = {
+            name: '类目' + i
+        };
+    }
+    option = {
+        // 图的标题
+        title: {
+            text: 'ECharts 人物关系图'
+        },
+        // 提示框的配置
+        tooltip: {
+            formatter: function (x) {
+                return x.data.des;
+            }
+        },
+        // 工具箱
+        toolbox: {
+            // 显示工具箱
+            show: true,
+            feature: {
+                mark: {
+                    show: true
+                },
+                // 还原
+                restore: {
+                    show: true
+                },
+                // 保存为图片
+                saveAsImage: {
+                    show: true
+                }
+            }
+        },
+        legend: [{
+            // selectedMode: 'single',
+            data: categories.map(function (a) {
+                return a.name;
+            })
+        }],
+        series: [{
+            type: 'graph',// 类型:关系图
+            layout: 'force', //图的布局，类型为力导图
+            symbolSize: 40, // 调整节点的大小
+            roam: true, // 是否开启鼠标缩放和平移漫游。默认不开启。如果只想要开启缩放或者平移,可以设置成 'scale' 或者 'move'。设置成 true 为都开启
+            edgeSymbol: ['circle', 'arrow'],
+            edgeSymbolSize: [2, 10],
+            edgeLabel: {
+                normal: {
+                    textStyle: {
+                        fontSize: 20
+                    }
+                }
+            },
+            force: {
+                repulsion: 2500,
+                edgeLength: [10, 50]
+            },
+            draggable: true,
+
+            lineStyle: {
+                normal: {
+                    width: 2,
+                    color: '#4b565b',
+                }
+            },
+            edgeLabel: {
+                normal: {
+                    show: true,
+                    formatter: function (x) {
+                        return x.data.name;
+                    }
+                }
+            },
+            label: {
+                normal: {
+                    show: true,
+                    textStyle: {},
+                    position:'inside'
+                }
+            },
+
+            // 数据
+            data: data,
+            links: link,
+            categories: categories,
+        }]
+    };
+    myChart.setOption(option);
+        </script>
             
     </body>
 </html>
