@@ -74,8 +74,13 @@
                     <hr>
 
                 </form>
-                {{ errmsg }}
-                <!-- ./ form -->
+                {% if messages %}
+        <script>
+            {% for message in messages %}
+                alert('{{ message.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
             </div>
             <!-- end of page content -->
 

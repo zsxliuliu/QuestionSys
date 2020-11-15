@@ -49,8 +49,13 @@
         <p class="text-muted">还没有账号？</p>
         <a href="{% url 'user:register'%}" class="btn btn-outline-light btn-sm">立即注册</a>
     </form>
-    <!-- ./ form -->
-    {{ errmsg }}
+    {% if messages %}
+        <script>
+            {% for message in messages %}
+                alert('{{ message.message }}');
+            {% endfor %}
+        </script>
+    {% endif %}
 
 </div>
 

@@ -38,7 +38,7 @@
                 <div class="menu-top-menu-container">
                     <ul id="menu-top-menu" class="clearfix">
                         <li><a href="index-2.html">欢迎您，<em>{{ user.username }}</em>！</a></li>
-                        <li class="current-menu-item"><a href="index.html">首页</a></li>
+                        <li class="current-menu-item"><a href="{% url 'user:index'%}">首页</a></li>
                         <li><a href="{% url 'note:newnote'%}">笔记</a></li>
                         <li><a href="{% url 'user:usercenter'%}">个人中心</a></li>
                         <li><a href="contact.html">联系我们</a></li>
@@ -56,8 +56,9 @@
 <div class="search-area-wrapper">
     <div class="search-area container">
         <h3 class="search-header">煤矿知识库智能问答系统</h3>
-        <form id="search-form" class="search-form clearfix" method="get" action="#" autocomplete="off">
-            <input class="search-term required" type="text" id="s" name="s" placeholder="掘进施工过程中的安全措施有哪些?"
+        <form id="search-form" class="search-form clearfix" method="post" action="/user/index" autocomplete="off">
+            {% csrf_token %}
+            <input class="search-term required" type="text" id="s" name="question"
                    title="* Please enter a search term!"/>
             <input class="search-btn" type="submit" value="提问"/>
             <div id="search-error-container"></div>
@@ -81,10 +82,10 @@
                     <article class="faq-item active">
                         <span class="faq-icon"></span>
                         <h3 class="faq-question">
-                            <a href="#">掘进施工过程中的安全措施有哪些?</a>
+                            <a href="#">{{ question }}</a>
                         </h3>
                         <div class="faq-answer">
-                            <p>掘进施工应采取的措施为防止冻结壁变形和片帮 防止断管</p>
+                            <p>{{ daan.answer }} </p>
                         </div>
                     </article>
                 </div>

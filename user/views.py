@@ -2,10 +2,12 @@ from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
-from user.models import User
+from django.contrib import messages
+from user.models import User, Quest
 from note.models import Note
 import re
 # Create your views here.
+
 # 注册
 def register(request):
     if request.method == 'GET':
@@ -35,14 +37,20 @@ def register(request):
 
         if user:
             # 用户名已存在
-            return render(request, 'register.html', {'errmsg': '用户名已存在'})
-
-        # 进行业务处理: 进行用户注册
-        user = User.objects.create_user(username=username, password=password, phone=phone, email=email)
-        user.save()
-
-        # 返回应答, 跳转到首页
-        return redirect(reverse('user:login'))
+            messages.error(request, '用户已存在')
+            return render(request, 'register.html')
+        try:
+            # 进行业务处理: 进行用户注册
+            user = User.objects.create_user(username=username, password=password, phone=phone, email=email)
+            user.save()
+            messages.success(request, '注册成功')
+            # 返回应答, 跳转到首页
+            return redirect(reverse('user:login'))
+        except Exception as e:
+            print(e)
+            messages.error(request, '注册失败')
+            # 返回应答, 跳转到首页
+            return render(request, 'register.html')
 
 # 登录
 def loginProcess(request):
@@ -96,20 +104,28 @@ def loginProcess(request):
             return response
         else:
             # 用户名或密码错误
-            return render(request, 'login.html', {'errmsg': '用户名或密码错误'})
+            messages.error(request, '用户名或密码错误')
+            return render(request, 'login.html')
 
+# 退出登录
 def logout(request):
     return redirect(reverse('user:login'))
 
+# 首页显示
 def index(request):
+    user = request.user
+    user_id = user.id
 
-        user = request.user
-        user_id = user.id
-
-        # 得到该用户的笔记列表
-        notes = Note.objects.filter(user_id=user_id).order_by('-create_time')
+    # 得到该用户的笔记列表
+    notes = Note.objects.filter(user_id=user_id).order_by('-create_time')
+    if request.method == 'GET':
         return render(request, 'index.html', {'notes': notes})
+    else:
+        question = request.POST.get('question')
+        daan = Quest.objects.filter(question__contains=question).first()
+        return render(request, 'index.html', {'notes': notes, 'daan':daan, 'question':question})
 
+# 用户中心
 def usercenter(request):
     if request.method == 'GET':
         '''显示'''
@@ -140,7 +156,11 @@ def usercenter(request):
         user_id = user.id
 
         User.objects.filter(id=user_id).update(username=username, password=password, phone=phone, email=email)
+        messages.success(request, '信息已修改')
         user = User.objects.get(id=user_id)
-        context = {'page': 'user', }
+        context = {'user': user, }
         return render(request, 'usercenter.html',context)
+
+
+
 
